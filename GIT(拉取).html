@@ -1,0 +1,661 @@
+<!DOCTYPE html><html><head><title>GIT(拉取)</title><meta charset='utf-8'><link href='https://dn-maxiang.qbox.me/res-min/themes/marxico.css' rel='stylesheet'><style>
+.note-content  {font-family: 'Helvetica Neue', Arial, 'Hiragino Sans GB', STHeiti, 'Microsoft YaHei', 'WenQuanYi Micro Hei', SimSun, Song, sans-serif;}
+
+</style></head><body><div id='preview-contents' class='note-content'>
+                        
+                    
+
+
+
+<h2 id="git拉取">GIT(拉取)</h2>
+
+<hr>
+
+<div><div class="toc"><div class="toc">
+<ul>
+<li><ul>
+<li><a href="#git拉取">GIT(拉取)</a><ul>
+<li><a href="#git">GIT</a><ul>
+<li><a href="#版本回退">版本回退</a></li>
+<li><a href="#分支管理">分支管理</a></li>
+<li><a href="#gitignore配置">.gitignore配置</a></li>
+<li><a href="#发布静态网站">发布静态网站</a></li>
+</ul>
+</li>
+<li><a href="#spa单页应用开发框架">SPA（单页应用开发）框架</a></li>
+<li><a href="#组件">组件</a><ul>
+<li><a href="#组件的分类">组件的分类</a></li>
+<li><a href="#组件化开发的好处">组件化开发的好处</a></li>
+<li><a href="#组件的使用">组件的使用</a></li>
+<li><a href="#全局组件">全局组件</a></li>
+</ul>
+</li>
+<li><a href="#vue-router">VUE-ROUTER</a><ul>
+<li><a href="#组件组成">组件组成</a></li>
+<li><a href="#webpack">webpack</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#vue-cli-脚手架">vue-cli 脚手架</a><ul>
+<li><ul>
+<li><a href="#flex">FLEX</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<hr>
+
+
+
+<h3 id="git">GIT</h3>
+
+<blockquote>
+  <p>分布式版本控制系统</p>
+  
+  <ul><li>记住是谁提交的东西</li>
+  <li>可以保存每个阶段的内容（备份功能）</li>
+  <li>可以实现历史穿越</li>
+  <li>github 开源 多端共享</li>
+  <li>团队协作</li>
+  </ul>
+  
+  <p>集中式版本控制系统 svn</p>
+</blockquote>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs stylus"><div class="hljs-line"><span class="hljs-comment">//配置用户名和邮箱</span>
+</div><div class="hljs-line">$ git config --global user<span class="hljs-selector-class">.name</span> yourname
+</div><div class="hljs-line">$ git config --global user<span class="hljs-selector-class">.email</span> **@**<span class="hljs-selector-class">.com</span>
+</div><div class="hljs-line"><span class="hljs-comment">//查看git配置信息</span>
+</div><div class="hljs-line">$ git config --list
+</div></code></pre>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs gams"><div class="hljs-line"><span class="hljs-comment">//初始化git（不能嵌套使用git），以某个文件夹作为git管理的目录</span>
+</div><div class="hljs-line"><span class="hljs-symbol">$</span> git init
+</div></code></pre>
+
+<p>linux命令</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs gams"><div class="hljs-line"><span class="hljs-symbol">$</span> pwd
+</div><div class="hljs-line"><span class="hljs-comment">//打印当前工作目录</span>
+</div><div class="hljs-line"><span class="hljs-symbol">$</span> rm -rf .git <span class="hljs-comment">//删除整个文件夹需要加 -rf，</span>
+</div><div class="hljs-line"><span class="hljs-comment">//创建文件夹</span>
+</div><div class="hljs-line"><span class="hljs-symbol">$</span> mkdir （文件夹）
+</div><div class="hljs-line"><span class="hljs-comment">//显示所有文件和文件夹</span>
+</div><div class="hljs-line"><span class="hljs-symbol">$</span> ls <span class="hljs-comment">//list show</span>
+</div><div class="hljs-line"><span class="hljs-comment">//显示所有详细文件和文件夹</span>
+</div><div class="hljs-line"><span class="hljs-symbol">$</span> ls -al
+</div><div class="hljs-line"><span class="hljs-comment">// 改变目录</span>
+</div><div class="hljs-line"><span class="hljs-symbol">$</span> cd 目录 
+</div><div class="hljs-line"><span class="hljs-comment">//创建一个空文件</span>
+</div><div class="hljs-line"><span class="hljs-symbol">$</span> touch xxx
+</div><div class="hljs-line">
+</div><div class="hljs-line"><span class="hljs-symbol">$</span> vi index.txt
+</div><div class="hljs-line">i或者a（插入模式）
+</div><div class="hljs-line">esc
+</div><div class="hljs-line">shift + <span class="hljs-string">':'</span>
+</div><div class="hljs-line">:q  退出
+</div><div class="hljs-line">:q! 不保存强制退出
+</div><div class="hljs-line">:wq 保存并退出
+</div><div class="hljs-line"><span class="hljs-symbol">$</span> cat 文件名 <span class="hljs-comment">//查看文件内容</span>
+</div></code></pre>
+
+<p>git有工作区、暂存区（过渡区）、历史区 <br>
+svn没有暂存区（过渡区），svn每个文件夹下都有一个.svn文件 git会将需要的文件放在.git下</p>
+
+<p>提交到暂存区</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs armasm"><div class="hljs-line">$ git <span class="hljs-keyword">add </span>. 或者 git <span class="hljs-keyword">add </span>-A 或者 git <span class="hljs-keyword">add </span>文件名
+</div></code></pre>
+
+<p>查看状态，如果是红色表示未添加到暂存区</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs elixir"><div class="hljs-line"><span class="hljs-variable">$ </span>git status
+</div></code></pre>
+
+<p>添加到历史区，第一次提交叫做根提交</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs elixir"><div class="hljs-line"><span class="hljs-variable">$ </span>git commit -m<span class="hljs-string">"文字"</span>
+</div></code></pre>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs stylus"><div class="hljs-line">$ git commit -<span class="hljs-selector-tag">a</span> -m <span class="hljs-string">"文字"</span>
+</div></code></pre>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs crmsh"><div class="hljs-line">//强制推到库中
+</div><div class="hljs-line">$ git push origin <span class="hljs-keyword">master</span> <span class="hljs-title">--force</span>
+</div></code></pre>
+
+<p>查看提交历史</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs gams"><div class="hljs-line"><span class="hljs-symbol">$</span> git <span class="hljs-built-in">log</span>
+</div></code></pre>
+
+<p>比较区的不同</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs gams"><div class="hljs-line"><span class="hljs-comment">//比较工作区和暂存区</span>
+</div><div class="hljs-line"><span class="hljs-symbol">$</span> git diff
+</div><div class="hljs-line"><span class="hljs-comment">//比较工作区和历史区</span>
+</div><div class="hljs-line"><span class="hljs-symbol">$</span> git diff  分支名
+</div><div class="hljs-line"><span class="hljs-comment">//比较暂存区和历史区</span>
+</div><div class="hljs-line"><span class="hljs-symbol">$</span> git diff --cached
+</div></code></pre>
+
+
+
+<h4 id="版本回退">版本回退</h4>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs gams"><div class="hljs-line"><span class="hljs-comment">//从暂存区回到工作区</span>
+</div><div class="hljs-line"><span class="hljs-symbol">$</span> git checkout 文件名
+</div></code></pre>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs gams"><div class="hljs-line"><span class="hljs-comment">//从暂存区回退到上一次的暂存区内容</span>
+</div><div class="hljs-line"><span class="hljs-symbol">$</span> git reset HEAD 文件名
+</div></code></pre>
+
+<ul><li>从历史区回滚</li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs gams"><div class="hljs-line"><span class="hljs-symbol">$</span> git reset --hard 版本ID（可以通过git <span class="hljs-built-in">log</span>查看）
+</div></code></pre>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs gams"><div class="hljs-line"><span class="hljs-comment">//（版本回滚后，可以通过此命令查看所有版本ID）</span>
+</div><div class="hljs-line"><span class="hljs-symbol">$</span> git reflog
+</div></code></pre>
+
+
+
+<h4 id="分支管理">分支管理</h4>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs gams"><div class="hljs-line"><span class="hljs-comment">//查看分支</span>
+</div><div class="hljs-line"><span class="hljs-symbol">$</span> git branch
+</div><div class="hljs-line"><span class="hljs-comment">//创建分支</span>
+</div><div class="hljs-line"><span class="hljs-symbol">$</span> git branch 分支名
+</div><div class="hljs-line"><span class="hljs-comment">//切换分支 </span>
+</div><div class="hljs-line"><span class="hljs-symbol">$</span> git checkout 分支名
+</div><div class="hljs-line"><span class="hljs-comment">// 删除分支,不能在当前分支上删除当前分支</span>
+</div><div class="hljs-line"><span class="hljs-symbol">$</span> git branch -D 分支名
+</div><div class="hljs-line"><span class="hljs-comment">// 创建并切换分支</span>
+</div><div class="hljs-line"><span class="hljs-symbol">$</span> git checkout -b 分支名
+</div><div class="hljs-line"><span class="hljs-comment">// 合并分支</span>
+</div><div class="hljs-line"><span class="hljs-symbol">$</span> git merge 分支名
+</div></code></pre>
+
+
+
+<p><img longdesc="./1507968484212.png" alt="Alt text" title="" type="image/png" src="data:image/png;base64,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" class=""></p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs gams"><div class="hljs-line"><span class="hljs-comment">//见上图</span>
+</div><div class="hljs-line"><span class="hljs-symbol">$</span> git <span class="hljs-built-in">log</span> --graph --oneline
+</div></code></pre>
+
+<blockquote>
+  <p>提交到谁的身上，才会归谁所有，如果再次更改分支上的内容，不提交是无法切换分支的  <br>
+  git merge 默认会将分支上所有提交的内容全部合并 </p>
+</blockquote>
+
+<p>cherry-pick可以用来合并某一个历史</p>
+
+
+
+<h4 id="gitignore配置">.gitignore配置</h4>
+
+<p>空文件夹默认不会提交，为了能够正常提交，则在空文件夹下新建一个.gitkeep的文件</p>
+
+<p>连接远程仓库 <br>
+git remote add  origin url <br>
+git remote -v <br>
+git remote rm orgin <br>
+git clone url 名字，如果不写名字，那么默认为origin</p>
+
+<p>settings Collaborators 添加贡献者 <br>
+在推送时最后先拉取远程的内容，合并后再推送，如果产生冲突，需要先解决冲突</p>
+
+
+
+<h4 id="发布静态网站">发布静态网站</h4>
+
+<ul><li>要求有一个固定的分支 gh-pages</li>
+<li>将静态内容推送到这个分支上</li>
+</ul>
+
+
+
+<h3 id="spa单页应用开发框架">SPA（单页应用开发）框架</h3>
+
+<ul><li>一个单页面应用</li>
+</ul>
+
+
+
+<h3 id="组件">组件</h3>
+
+<ul><li>把一个复杂的页面拆分成若干个组件，最后再拼成一个完整的页面。这样既减少了逻辑复杂度。</li>
+</ul>
+
+
+
+<h4 id="组件的分类">组件的分类</h4>
+
+<ul><li>页面级组件（home组件、list组件）</li>
+<li>基础组件（页面级组件包含基础组件，可复用的组件）</li>
+</ul>
+
+
+
+<h4 id="组件化开发的好处">组件化开发的好处</h4>
+
+<ul><li>提高开发效率（可以根据组件来分工，实现了所谓的模块化）</li>
+<li>方便重复使用（相同组件抽离出来）</li>
+<li>便于协同开发（减少了代码冲突）</li>
+<li>更容易被管理和维护（某个组件出问题，改某个组件即可）</li>
+</ul>
+
+
+
+<h4 id="组件的使用">组件的使用</h4>
+
+<ul><li>全局组件（不需要在组件中再次声明） <br>
+<ul>
+<li>写一些插件时可能会需要用到全局组件</li></ul></li>
+<li>局部组件（在某个组件中声明的） <br>
+<ul>
+<li>自己写的一些组件，一般都是局部组件</li></ul></li>
+</ul>
+
+<blockquote>
+  <p>1、组件的名字不能使用html标签 <br>
+  2、一个组件就是一个对象 <br>
+  3、名字规范，组件中的名字，如果中间有大写会自动转化为小写，例：myHello会转换为myhello <br>
+  4、组件模板中只能有一个根节点 <br>
+  5、标签中的名字可以转化（短横线转驼峰，大写转小写），一般我们使用时名字保持一致 <br>
+  6、组件中的data是一个函数，需要返回一个对象。因为组件之间不应该相互影响，所以data是一个函数，返回一个新对象，来避免相互引用问题 <br>
+  7、组件中的数据可以在自己的模板中使用 <br>
+  8、在创建实例前先创建组件，然后才能使用组件 <br>
+  9、组件里methods中函数的this指向的当前组件的实例。 <br>
+  10、局部组件只能在父级组件中使用，即在哪儿注册的组件，就在哪儿使用。全局组件不需要注册，可以在全局使用 <br>
+  11、组件之间相互独立 <br>
+  在Vue构造函数上定义的组件为全局组件 <br>
+  在Vue实例上定义的组件为局部组件 <br>
+  <strong>组件的使用顺序</strong> <br>
+  1、引入组件 <br>
+  2、注册组件 <br>
+  3、在模板中使用</p>
+</blockquote>
+
+<p>嵌套的组件可以抽离出来单独来写</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs xquery"><div class="hljs-line">    <span class="hljs-keyword">let</span> abc = {
+</div><div class="hljs-line">        template: <span class="hljs-string">'&lt;div&gt;菠菜&lt;/div&gt;'</span>
+</div><div class="hljs-line">    };
+</div><div class="hljs-line">    <span class="hljs-keyword">let</span> child = {
+</div><div class="hljs-line">        template: <span class="hljs-string">'&lt;div&gt;绿叶蔬菜&lt;abc&gt;&lt;/abc&gt;&lt;/div&gt;'</span>,
+</div><div class="hljs-line">        components: {
+</div><div class="hljs-line">            abc
+</div><div class="hljs-line">        }
+</div><div class="hljs-line">    };
+</div><div class="hljs-line">    <span class="hljs-keyword">let</span> parent = {
+</div><div class="hljs-line">        template: <span class="hljs-string">'&lt;div&gt;蔬菜&lt;child&gt;&lt;/child&gt;&lt;/div&gt;'</span>,
+</div><div class="hljs-line">        components: {
+</div><div class="hljs-line">            child
+</div><div class="hljs-line">        }
+</div><div class="hljs-line">    };
+</div><div class="hljs-line">    <span class="hljs-keyword">let</span> vm = new Vue({
+</div><div class="hljs-line">        el: <span class="hljs-string">'#app'</span>,
+</div><div class="hljs-line">        components: {
+</div><div class="hljs-line">            parent
+</div><div class="hljs-line">        }
+</div><div class="hljs-line">    })
+</div></code></pre>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs xml"><div class="hljs-line"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+</div><div class="hljs-line"><span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"parent"</span>&gt;</span>
+</div><div class="hljs-line">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>parent<span class="hljs-tag">&lt;<span class="hljs-name">child</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">child</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div><div class="hljs-line"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+</div><div class="hljs-line"><span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"child"</span>&gt;</span>
+</div><div class="hljs-line">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>child<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div><div class="hljs-line"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+</div><div class="hljs-line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"node_modules/vue/dist/vue.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</div><div class="hljs-line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+</span></div><div class="hljs-line">    <span class="hljs-keyword">let</span> child = {
+</div><div class="hljs-line">        <span class="hljs-attr">template</span>:<span class="hljs-string">'#child'</span>
+</div><div class="hljs-line">    };
+</div><div class="hljs-line">    <span class="hljs-keyword">let</span> parent = {
+</div><div class="hljs-line">        <span class="hljs-attr">template</span>: <span class="hljs-string">'#parent'</span>,
+</div><div class="hljs-line">        <span class="hljs-attr">components</span>:{child}
+</div><div class="hljs-line">    };
+</div><div class="hljs-line">    <span class="hljs-keyword">let</span> vm = <span class="hljs-keyword">new</span> Vue({
+</div><div class="hljs-line">        <span class="hljs-attr">el</span>: <span class="hljs-string">'#app'</span>,
+</div><div class="hljs-line">        <span class="hljs-attr">template</span>:<span class="hljs-string">'&lt;parent&gt;&lt;/parent&gt;'</span>,
+</div><div class="hljs-line">        <span class="hljs-attr">data</span>: {},
+</div><div class="hljs-line">        <span class="hljs-attr">components</span>: {
+</div><div class="hljs-line">            parent
+</div><div class="hljs-line">        }
+</div><div class="hljs-line">    })
+</div><div class="hljs-line"><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</div><div class="hljs-line"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+</div></code></pre>
+
+<p>template中的内容会被转换为虚拟DOM</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs xml"><div class="hljs-line"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+</div><div class="hljs-line"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">child</span> <span class="hljs-attr">:title</span>=<span class="hljs-string">"msg"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">child</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div><div class="hljs-line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"node_modules/vue/dist/vue.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</div><div class="hljs-line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+</span></div><div class="hljs-line">    <span class="hljs-keyword">let</span> vm = <span class="hljs-keyword">new</span> Vue({
+</div><div class="hljs-line">        <span class="hljs-attr">el</span>:<span class="hljs-string">'#app'</span>,
+</div><div class="hljs-line">        <span class="hljs-attr">data</span>:{
+</div><div class="hljs-line">            <span class="hljs-attr">msg</span>:<span class="hljs-string">'老子'</span>
+</div><div class="hljs-line">        },
+</div><div class="hljs-line">        <span class="hljs-attr">components</span>:{
+</div><div class="hljs-line">            <span class="hljs-attr">child</span>:{
+</div><div class="hljs-line">                <span class="hljs-attr">template</span>:<span class="hljs-string">'&lt;div&gt;儿子 打 {{title}}&lt;/div&gt;'</span>,
+</div><div class="hljs-line">                <span class="hljs-attr">props</span>:[<span class="hljs-string">'title'</span>] <span class="hljs-comment">//拿到title属性</span>
+</div><div class="hljs-line">            },
+</div><div class="hljs-line">        }
+</div><div class="hljs-line">    })
+</div><div class="hljs-line"><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</div><div class="hljs-line"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+</div></code></pre>
+
+<p>子组件不能直接修改父组件的数据，这是单向数据流（Prop 是单向绑定的：当父组件的属性变化时，将传导给子组件，但是反过来不会。这是为了防止子组件无意间修改了父组件的状态，来避免应用的数据流变得难以理解。）。如果想子组件修改父组件 的数据，那么可以让子组件传递给父组件，父组件改变后再重新渲染子组件。</p>
+
+<p><strong>prop验证</strong></p>
+
+<blockquote>
+  <p>我们可以为组件的 prop 指定验证规则。如果传入的数据不符合要求，Vue 会发出警告，但是仍然会执行，<code>仅仅是发出警告</code>。这对于开发给他人使用的组件非常有用。 <br>
+  要指定验证规则，需要用对象的形式来定义 prop，而不能用字符串数组</p>
+</blockquote>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs less"><div class="hljs-line"><span class="hljs-selector-tag">Vue</span><span class="hljs-selector-class">.component</span>(<span class="hljs-string">'example'</span>, {
+</div><div class="hljs-line">  <span class="hljs-attribute">props</span>: {
+</div><div class="hljs-line">    <span class="hljs-comment">// 基础类型检测 (`null` 指允许任何类型)</span>
+</div><div class="hljs-line">    <span class="hljs-attribute">propA</span>: Number,
+</div><div class="hljs-line">    <span class="hljs-comment">// 可能是多种类型</span>
+</div><div class="hljs-line">    <span class="hljs-attribute">propB</span>: [String, Number],
+</div><div class="hljs-line">    <span class="hljs-comment">// 必传且是字符串</span>
+</div><div class="hljs-line">    <span class="hljs-attribute">propC</span>: {
+</div><div class="hljs-line">      <span class="hljs-attribute">type</span>: String,
+</div><div class="hljs-line">      <span class="hljs-attribute">required</span>: true
+</div><div class="hljs-line">    },
+</div><div class="hljs-line">    <span class="hljs-comment">// 数值且有默认值</span>
+</div><div class="hljs-line">    <span class="hljs-attribute">propD</span>: {
+</div><div class="hljs-line">      <span class="hljs-attribute">type</span>: Number,
+</div><div class="hljs-line">      <span class="hljs-attribute">default</span>: <span class="hljs-number">100</span>
+</div><div class="hljs-line">    },
+</div><div class="hljs-line">    <span class="hljs-comment">// 数组/对象的默认值应当由一个工厂函数返回</span>
+</div><div class="hljs-line">    <span class="hljs-attribute">propE</span>: {
+</div><div class="hljs-line">      <span class="hljs-attribute">type</span>: Object,
+</div><div class="hljs-line">      <span class="hljs-attribute">default</span>: function () {
+</div><div class="hljs-line">        return { <span class="hljs-attribute">message</span>: <span class="hljs-string">'hello'</span> }
+</div><div class="hljs-line">      }
+</div><div class="hljs-line">    },
+</div><div class="hljs-line">    <span class="hljs-comment">// 自定义验证函数</span>
+</div><div class="hljs-line">    <span class="hljs-attribute">propF</span>: {
+</div><div class="hljs-line">      <span class="hljs-attribute">validator</span>: function (value) {
+</div><div class="hljs-line">        return value &gt; <span class="hljs-number">10</span>
+</div><div class="hljs-line">      }
+</div><div class="hljs-line">    }
+</div><div class="hljs-line">  }
+</div><div class="hljs-line">})
+</div></code></pre>
+
+<p>ref如果写在组件上，那么就能获取组件的实例 <br>
+default不能和validate一起使用 <br>
+this.$emit发布</p>
+
+<p><code>组件</code>就是自定义元素</p>
+
+
+
+<h4 id="全局组件">全局组件</h4>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs gradle"><div class="hljs-line">Vue.component(tagName,<span class="hljs-keyword">options</span>);
+</div><div class="hljs-line"><span class="hljs-comment">//所有组件都是基于根实例，且组件只有拥有一个根元素</span>
+</div><div class="hljs-line"><span class="hljs-keyword">new</span> Vue({
+</div><div class="hljs-line">    el:<span class="hljs-string">'#app'</span>
+</div><div class="hljs-line">})
+</div></code></pre>
+
+<p>组件中的data必须是函数，而且返回一个新的对象 <br>
+因为父组件和子组件的作用域是独立的，互相不能访问，所以需要使用props来接收父组件传递数据给子组件的数据 <br>
+属性的名字需要转化成驼峰命名法</p>
+
+<p>父组件挂载完成并不一定保证子组件一定渲染完成，所以在mounted中一般会用$nextTick防止无法获取最新的数据</p>
+
+<p><strong>箭头函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象</strong> <br>
+父传子 属性校验 <br>
+子传父 自定义事件 <br>
+平级组件  发布订阅 <br>
+复杂的 VUEX</p>
+
+<p>slot插槽 <br>
+别人写好的一个模态框组件，我们来使用， 会先引入进来，传入一些自己的内容，所以绑定的方法都是自己的（即父级的），如果是写在模板上的属性和方法，那么绑定是的模板实例上的。</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs armasm"><div class="hljs-line">&lt;<span class="hljs-meta">keep</span>-alive&gt;
+</div><div class="hljs-line">&lt;components :is=<span class="hljs-string">'val'</span>&gt;&lt;/components
+</div><div class="hljs-line">&lt;/<span class="hljs-meta">keep</span>-alive&gt;
+</div><div class="hljs-line">
+</div><div class="hljs-line">//actived钩子函数，不受<span class="hljs-meta">keep</span>-alive干扰，依然会执行，如果没有<span class="hljs-meta">keep</span>-alive，则不会执行
+</div><div class="hljs-line">当<span class="hljs-meta">keep</span>-alive移除时调用deactivated(这句话有问题）
+</div><div class="hljs-line">当组件在 &lt;<span class="hljs-meta">keep</span>-alive&gt; 内被切换，它的 activated 和 deactivated 这两个生命周期钩子函数将会被对应执行。
+</div></code></pre>
+
+
+
+<h3 id="vue-router">VUE-ROUTER</h3>
+
+<p><strong>路由</strong> ：不同的URL返回不同的结果 <br>
+VUE的路由：SPA中只有一个首页，切换URL地址显示不同的组件 <br>
+hash 有#号 ，  history.pushState（）没#号，在开发的时候，页面不存在会产生404，上线时会使用这种方式，可以依赖服务端解决404问题 <br>
+mode模式，默认模式是hash模式，如果mode:’history’，就是第二种 <br>
+to动态绑定时可以放对象，tag表示编译后的标签名</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs groovy"><div class="hljs-line">    let routes=[
+</div><div class="hljs-line">        {<span class="hljs-string">path:</span><span class="hljs-string">'/'</span>,<span class="hljs-string">component:</span>home},<span class="hljs-comment">//path:'/'或path:''配置默认页</span>
+</div><div class="hljs-line">        {<span class="hljs-string">path:</span><span class="hljs-string">'/home'</span>,<span class="hljs-string">component:</span>home},
+</div><div class="hljs-line">        {<span class="hljs-string">path:</span><span class="hljs-string">'/list'</span>,<span class="hljs-string">component:</span>list},
+</div><div class="hljs-line">        {<span class="hljs-string">path:</span><span class="hljs-string">'*'</span>,<span class="hljs-string">component:</span>list} <span class="hljs-comment">//一定写在最下面，找不到路径时走这个，但是页面的路径还是错误的那个</span>
+</div><div class="hljs-line">        {<span class="hljs-string">path:</span><span class="hljs-string">'*'</span>,<span class="hljs-string">redirect:</span>list} <span class="hljs-comment">//重定向，一般写404</span>
+</div><div class="hljs-line">        ];
+</div></code></pre>
+
+
+
+<h4 id="组件组成">组件组成</h4>
+
+<ul><li>模板（结构）：需要vue-template-compiler</li>
+<li>逻辑（行为）</li>
+<li>样式 </li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs xml"><div class="hljs-line"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>
+</div><div class="hljs-line"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+</div><div class="hljs-line"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="undefined">
+</span></div><div class="hljs-line"><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</div><div class="hljs-line"><span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">"less"</span> <span class="hljs-attr">scoped</span>&gt;</span><span class="undefined">
+</span></div><div class="hljs-line">//lang="less"，指定语言，scoped：样式只在当前文件有效，如果不写scoped那么在全局有效
+</div><div class="hljs-line"><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+</div></code></pre>
+
+
+
+<h4 id="webpack">webpack</h4>
+
+<p>webpack-dev-server 并不会生成文件，会创建一个服务 <br>
+npm install vue-template-compiler –save-dev <br>
+引入第三方模块时，如果要引入的文件不是默认的，需要把路径写全</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs less"><div class="hljs-line"><span class="hljs-selector-tag">new</span> <span class="hljs-selector-tag">Router</span>({
+</div><div class="hljs-line">    <span class="hljs-attribute">linkActiveClass</span>: <span class="hljs-string">'link-active'</span>,<span class="hljs-comment">//点击导航时给点击的导航及其父级添加类名。linkExactActiveClass这个是当前选中的那一级导航的样式 </span>
+</div><div class="hljs-line">    <span class="hljs-attribute">linkExactActiveClass</span>:<span class="hljs-string">'link-exact-active'</span>
+</div><div class="hljs-line">    <span class="hljs-attribute">routes</span>: [
+</div><div class="hljs-line">        {<span class="hljs-attribute">path</span>: <span class="hljs-string">'/home'</span>, <span class="hljs-attribute">component</span>: Home},
+</div><div class="hljs-line">        {
+</div><div class="hljs-line">            <span class="hljs-attribute">path</span>: <span class="hljs-string">'/profile'</span>,
+</div><div class="hljs-line">            <span class="hljs-attribute">component</span>: Profile,
+</div><div class="hljs-line">            <span class="hljs-attribute">children</span>: [{<span class="hljs-attribute">path</span>: <span class="hljs-string">'aboutme'</span>, <span class="hljs-attribute">component</span>: aboutMe}, {<span class="hljs-attribute">path</span>: <span class="hljs-string">'introduce'</span>, <span class="hljs-attribute">component</span>: introduce}]
+</div><div class="hljs-line">        },
+</div><div class="hljs-line">        {<span class="hljs-attribute">path</span>: <span class="hljs-string">'/'</span>, <span class="hljs-attribute">component</span>: Home}
+</div><div class="hljs-line">    ]
+</div><div class="hljs-line">});
+</div></code></pre>
+
+<p>this.<span>$</span>route 属性 <br>
+this.<span>$</span>router 方法 <br>
+this.<span>$</span>router.push(‘/profile’) 路径跳转，将当前的路径放到历史管理中 <br>
+this.<span>$</span>router.go(-1) 返回上一页 <br>
+this.<span>$</span>router.back() 和this.<span>$</span>router.go(-1)功能一样 <br>
+this.<span>$</span>router.replace(‘/profile’)跳转后不留痕迹 <br>
+this.$route.params.参数名</p>
+
+
+
+<h2 id="vue-cli-脚手架">vue-cli 脚手架</h2>
+
+<ul><li>simple</li>
+<li>webpack-simple</li>
+<li>webpack（开发项目时一般用这个）</li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs elixir"><div class="hljs-line"><span class="hljs-variable">$ </span>npm install vue-cli -g
+</div><div class="hljs-line"><span class="hljs-variable">$ </span>vue init  模板名  项目名
+</div></code></pre>
+
+
+
+<h4 id="flex">FLEX</h4>
+
+<p><strong>flex布局</strong> <br>
+display:flex; <br>
+flex:1; <br>
+flex-direction: column纵向 <br>
+justify-content:center 水平居中 <br>
+align-items:center  垂直居中</p>
+
+<p>跨域请求： <br>
+1、cors 服务商配置允许前端跨域 <br>
+2、jsonp服务端返回一个方法执行：通过js动态创建script标签，script没有跨域限制，所以可以引入外部js。JSONP不支持POST请求 <br>
+3、iframe跨域，postMessage <br>
+4、nginx <br>
+5、window.name <br>
+6、webpack也可以实现跨域，上线后配置失效</p>
+
+<p><strong>NODEMON</strong>可以实时监控NODE的改变</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs xml"><div class="hljs-line">// exact 精确匹配
+</div><div class="hljs-line"><span class="hljs-tag">&lt;<span class="hljs-name">router-link</span> <span class="hljs-attr">to</span>=<span class="hljs-string">"/"</span> <span class="hljs-attr">exact</span> <span class="hljs-attr">tag</span>=<span class="hljs-string">"li"</span>&gt;</span>
+</div><div class="hljs-line">      <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"iconfont icon-shouye"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
+</div><div class="hljs-line">      <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>首页<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+</div><div class="hljs-line">    <span class="hljs-tag">&lt;/<span class="hljs-name">router-link</span>&gt;</span>
+</div></code></pre>
+
+<p>get put delete post；restful风格</p>
+
+<p>VUE-LAZYLOAD，VUE延迟加载插件  </p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs ada"><div class="hljs-line">import VueLazyload from <span class="hljs-symbol">'vue</span>-lazyload'
+</div><div class="hljs-line">
+</div><div class="hljs-line">Vue.<span class="hljs-keyword">use</span>(VueLazyload)
+</div><div class="hljs-line">
+</div><div class="hljs-line">// <span class="hljs-keyword">or</span> <span class="hljs-keyword">with</span> options
+</div><div class="hljs-line">Vue.<span class="hljs-keyword">use</span>(VueLazyload, {
+</div><div class="hljs-line">  preLoad: <span class="hljs-number">1.3</span>,
+</div><div class="hljs-line">  error: <span class="hljs-symbol">'dist</span>/error.png',
+</div><div class="hljs-line">  loading: <span class="hljs-symbol">'dist</span>/loading.gif',
+</div><div class="hljs-line">  attempt: <span class="hljs-number">1</span>
+</div><div class="hljs-line">})
+</div><div class="hljs-line">&lt;img v-lazy=<span class="hljs-string">"xxx"</span>&gt;
+</div></code></pre>
+
+<p>webpack 2+ 提供，分开打包，路由懒加载</p>
+
+<p><strong>webpack配置文件</strong></p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="hljs groovy"><div class="hljs-line">let path = require(<span class="hljs-string">'path'</span>);
+</div><div class="hljs-line">let HtmlWebpackPlugin = require(<span class="hljs-string">'html-webpack-plugin'</span>);
+</div><div class="hljs-line">module.exports = {
+</div><div class="hljs-line"><span class="hljs-symbol">    entry:</span> <span class="hljs-string">'./src/index.js'</span>,
+</div><div class="hljs-line"><span class="hljs-symbol">    output:</span> { <span class="hljs-comment">//输出的配置项</span>
+</div><div class="hljs-line"><span class="hljs-symbol">        path:</span> path.resolve(<span class="hljs-string">'build'</span>),<span class="hljs-comment">//输出的目录</span>
+</div><div class="hljs-line"><span class="hljs-symbol">        filename:</span> <span class="hljs-string">'bundle.js'</span>,<span class="hljs-comment">//输出的文件名</span>
+</div><div class="hljs-line">    },
+</div><div class="hljs-line"><span class="hljs-symbol">    module:</span> {
+</div><div class="hljs-line"><span class="hljs-symbol">        rules:</span> [
+</div><div class="hljs-line">            {<span class="hljs-string">test:</span> <span class="hljs-regexp">/\.js$/</span>, <span class="hljs-string">use:</span> <span class="hljs-string">'babel-loader'</span>, <span class="hljs-string">exclude:</span> <span class="hljs-regexp">/node_modules/</span>},
+</div><div class="hljs-line">            {<span class="hljs-string">test:</span> <span class="hljs-regexp">/\.less$/</span>, <span class="hljs-string">use:</span> [<span class="hljs-string">"style-loader"</span>, <span class="hljs-string">"css-loader"</span>, <span class="hljs-string">"less-loader"</span>], <span class="hljs-string">exclude:</span> <span class="hljs-regexp">/node_modules/</span>},
+</div><div class="hljs-line">            {<span class="hljs-string">test:</span> <span class="hljs-regexp">/\.(jpg|png|gif|svg)$/</span>, <span class="hljs-string">use:</span> <span class="hljs-string">"url-loader"</span>, <span class="hljs-string">exclude:</span> <span class="hljs-regexp">/node_modules/</span>},
+</div><div class="hljs-line">        ]
+</div><div class="hljs-line">    },
+</div><div class="hljs-line"><span class="hljs-symbol">    devtool:</span> <span class="hljs-string">'cheap-module-source-map'</span>,<span class="hljs-comment">//在出错的时候可以提示在源文件具体的代码行数，而非bundle.js行数</span>
+</div><div class="hljs-line"><span class="hljs-symbol">    plugins:</span> [
+</div><div class="hljs-line">        <span class="hljs-keyword">new</span> HtmlWebpackPlugin({
+</div><div class="hljs-line"><span class="hljs-symbol">            template:</span> <span class="hljs-string">'index.html'</span>
+</div><div class="hljs-line">        })
+</div><div class="hljs-line">    ]
+</div><div class="hljs-line">};
+</div></code></pre></div></body></html>
